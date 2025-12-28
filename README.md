@@ -8,7 +8,6 @@ Ce dépôt contient l'infrastructure complète du TP d'administration de systèm
 
 Architecture
 
-text
 
 admin (192.168.56.10) → Ansible + Zabbix base
 
@@ -32,7 +31,6 @@ winsrv : Windows Server 2019, WinRM, AD-DS installé, hardening (SMBv1/LLMNR dé
 
 Structure du Projet
 
-text
 
 MegaTP/
 
@@ -78,7 +76,6 @@ Git installé.
 
 Déploiement
 
-text
 
 cd C:\\MegaTP
 
@@ -162,7 +159,6 @@ Git push :
 
 
 
-text
 
 git init
 
