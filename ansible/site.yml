@@ -1,0 +1,19 @@
+﻿---
+- name: Déployer Zabbix Server
+  hosts: admin
+  become: yes
+  roles:
+    - zabbix-server
+
+- name: Hardening + cluster
+  hosts: cluster_nodes
+  become: yes
+  roles:
+    - linux-hardening
+    - cluster-ha
+
+- name: Windows AD
+  hosts: windows
+  gather_facts: no
+  roles:
+    - windows-ad

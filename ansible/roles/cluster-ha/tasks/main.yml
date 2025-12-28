@@ -1,0 +1,53 @@
+---
+- name: Installer outils monitoring
+  dnf:
+    name:
+      - htop
+      - net-tools
+      - bind-utils
+      - chrony
+    state: present
+
+- name: Activer NTP
+  systemd:
+    name: chronyd
+    state: started
+    enabled: yes
+
+- name: Page HA node01 (statique)
+  copy:
+    content: |
+      <html><h1>🚀 PRIMARY NODE01 - HA CLUSTER OK</h1>
+      <p>IP: {{ ansible_default_ipv4.address }}</p>
+      <p>VIP: 192.168.56.100 ✅</p>
+      <p>Node: {{ ansible_hostname }}</p>
+      <hr>Ansible + Vagrant + Hardening
+    dest: /var/www/html/index.html
+  when: inventory_hostname == 'node01'
+
+- name: Page HA node02 (statique)
+  copy:
+    content: |
+      <html><h1>🔄 BACKUP NODE02 - HA CLUSTER OK</h1>
+      <p>IP: {{ ansible_default_ipv4.address }}</p>
+      <p>VIP: 192.168.56.100 (Ready)</p>
+      <p>Node: {{ ansible_hostname }}</p>
+      <hr>Ansible + Vagrant + Hardening
+    dest: /var/www/html/index.html
+  when: inventory_hostname == 'node02'
+
+- name: Créer répertoire web commun
+  file:
+    path: /var/www/html
+    state: directory
+    mode: '0755'
+
+- name: Script VIP node01
+  copy:
+    content: |
+      #!/bin/bash
+      ip addr add 192.168.56.100/24 dev enp0s8
+      echo "VIP active sur node01"
+    dest: /usr/local/bin/ha-vip.sh
+    mode: '0755'
+  when: inventory_hostname == 'node01'

@@ -1,0 +1,6 @@
+﻿---
+vip_ip: "192.168.56.100"
+cluster_name: "ha-cluster"
+zabbix_server_ip: "192.168.56.10"
+domain_name: "lab.local"
+admin_password: "P@ssw0rd.123!"

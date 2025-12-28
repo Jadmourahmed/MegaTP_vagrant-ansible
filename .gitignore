@@ -1,0 +1,10 @@
+# Vagrant temporaires
+.vagrant/
+*.log
+.vagrant.d/
+
+# OS/Editeurs
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

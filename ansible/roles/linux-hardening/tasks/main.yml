@@ -1,0 +1,32 @@
+﻿---
+- name: Installer firewalld
+  dnf:
+    name: firewalld
+    state: present
+
+- name: Activer firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Ouvrir SSH
+  firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Ouvrir HTTP
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Désactiver SSH root
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify: restart sshd

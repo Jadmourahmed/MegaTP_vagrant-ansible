@@ -1,0 +1,32 @@
+---
+- name: Test WinRM
+  win_ping: {}
+
+- name: Créer marqueur AD + Ansible
+  win_file:
+    path: C:\\AD-Ready-Ansible-Hardened.txt
+    state: touch
+
+- name: Installer AD-DS feature
+  win_feature:
+    name: AD-Domain-Services
+    state: present
+
+- name: Hardening Windows - SMBv1 OFF
+  win_regedit:
+    path: HKLM:\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters
+    name: SMB1
+    data: 0
+    type: dword
+    state: present
+
+- name: Hardening - LLMNR OFF
+  win_regedit:
+    path: HKLM:\SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient
+    name: EnableMulticast
+    data: 0
+    type: dword
+    state: present
+
+- name: Créer hardening log
+  win_shell: "echo 'Windows Hardened by Ansible $(Get-Date)' > C:\\Hardening-Complete.txt"

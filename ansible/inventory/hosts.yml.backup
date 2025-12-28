@@ -1,0 +1,39 @@
+﻿all:
+  children:
+    admin:
+      hosts:
+        admin:
+          ansible_host: 192.168.56.10
+          ansible_user: vagrant
+          ansible_ssh_private_key_file: /home/vagrant/.ssh/admin.key
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+    nodes:
+      hosts:
+        node01:
+          ansible_host: 192.168.56.11
+          ansible_user: vagrant
+          ansible_ssh_private_key_file: /home/vagrant/.ssh/node01.key
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        node02:
+          ansible_host: 192.168.56.12
+          ansible_user: vagrant
+          ansible_ssh_private_key_file: /home/vagrant/.ssh/node02.key
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+    windows:
+      hosts:
+        winsrv:
+          ansible_host: 192.168.56.20
+          ansible_user: vagrant
+          ansible_password: vagrant
+          ansible_port: 5985
+          ansible_connection: winrm
+          ansible_winrm_transport: basic
+          ansible_winrm_server_cert_validation: ignore
+          ansible_winrm_operation_timeout_sec: 300
+
+    cluster_nodes:
+      hosts:
+        node01: {}
+        node02: {}
